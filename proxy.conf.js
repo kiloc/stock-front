@@ -5,10 +5,10 @@ const HttpsProxyAgent = require('https-proxy-agent');
 const proxyConfig = [
   {
     context: '/sina',
-    target: 'http://139.59.233.201',
+    target: 'http://1241.store',
     changeOrigin: true,
-    logLevel: "debug"
-  }
+    logLevel: 'debug',
+  },
 ];
 
 function setupForCorporateProxy(proxyConfig) {
@@ -16,15 +16,16 @@ function setupForCorporateProxy(proxyConfig) {
     proxyConfig = [proxyConfig];
   }
 
-  const proxyServer = process.env.http_proxy || process.env.HTTP_PROXY // || "http://10.102.208.110:8080";
+  const proxyServer = null; // process.env.http_proxy || process.env.HTTP_PROXY // || "http://10.102.208.110:8080";
 
-  console.log(proxyServer)
   let agent = null;
 
   if (proxyServer) {
     agent = new HttpsProxyAgent(proxyServer);
     console.log(`Using corporate proxy server: ${proxyServer}`);
-    proxyConfig.forEach(entry => { entry.agent = agent; });
+    proxyConfig.forEach((entry) => {
+      entry.agent = agent;
+    });
   }
 
   return proxyConfig;
